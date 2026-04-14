@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WinterCraft</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1f38;
+      --bg2:#14283f;
+      --panel:rgba(15,31,56,.82);
+      --panel2:rgba(15,31,56,.94);
+      --line:rgba(255,255,255,.12);
+      --text:#f5f1e8;
+      --muted:#c6d0da;
+      --accent:#9ed0ff;
+      --accent2:#6eb8ff;
+      --ok:#8fe1b2;
+      --err:#ff9a96;
+      --shadow:0 24px 80px rgba(0,0,0,.45);
+      --xl:36px;
+      --lg:28px;
+      --md:20px;
+      --wrap:min(1180px,calc(100vw - 32px));
+      --ease:220ms ease
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);background:radial-gradient(circle at top left,rgba(158,208,255,.22),transparent 34%),radial-gradient(circle at 80% 15%,rgba(145,191,255,.18),transparent 28%),linear-gradient(180deg,#0b1c32 0%,#13253f 40%,#0f1f38 100%);font-family:"Manrope",sans-serif;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.05) 0%,transparent 28%),linear-gradient(transparent 0%,rgba(255,255,255,.04) 100%);pointer-events:none;z-index:-3}body:after{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 92%);pointer-events:none;z-index:-2}
+    a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}button{cursor:pointer;border:0;padding:0;background:none;color:inherit}img{max-width:100%;display:block}.wrap{width:var(--wrap);margin:0 auto}.display{font-family:"Cormorant Garamond",serif}.glass{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(18px);box-shadow:var(--shadow)}
+    .nav-shell{position:sticky;top:16px;z-index:20;padding:16px 0 0}.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 20px;border-radius:999px}.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand-mark{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,rgba(158,208,255,.28),rgba(110,184,255,.2));border:1px solid rgba(255,255,255,.14);color:var(--accent);font-size:18px;flex:0 0 auto}.brand-title{font-size:.95rem;letter-spacing:.24em;font-weight:800;white-space:nowrap}.brand-sub{font-size:.78rem;color:var(--muted);white-space:nowrap}.nav-links,.lang-switcher,.hero-actions,.model-actions,.modal-actions{display:flex;gap:12px;flex-wrap:wrap}.nav-links{justify-content:center}.nav-links a{padding:10px 14px;border-radius:999px;color:var(--muted);transition:background var(--ease),color var(--ease)}.nav-links a:hover,.nav-links a:focus-visible{background:rgba(255,255,255,.08);color:var(--text);outline:none}
+    .lang-switcher button,.btn,.model-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 18px;border-radius:999px;transition:transform var(--ease),border-color var(--ease),background var(--ease),color var(--ease),box-shadow var(--ease)}.lang-switcher button{min-width:46px;background:rgba(255,255,255,.06);color:var(--muted);border:1px solid transparent}.lang-switcher button:hover,.lang-switcher button:focus-visible,.btn:hover,.btn:focus-visible,.model-btn:hover,.model-btn:focus-visible{transform:translateY(-2px);outline:none}.lang-switcher button.is-active,.model-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:rgba(110,184,255,.4);color:#fff7ec}
+    .btn{min-height:54px;padding:0 22px}.btn.primary,.model-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#1d1208;font-weight:800;box-shadow:0 18px 40px rgba(110,184,255,.18);border:0}.btn.secondary,.btn.ghost,.model-btn{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text)}
+    .hero{min-height:calc(100vh - 120px);display:grid;align-items:center;padding:42px 0 72px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:28px;align-items:stretch}.hero-copy,.hero-panel,.contact-card,.form-card,.model-card,.modal-card{position:relative;overflow:hidden}.hero-copy,.hero-panel,.contact-card,.form-card{border-radius:var(--xl);padding:clamp(28px,4vw,44px)}.hero-copy:before,.hero-panel:before,.contact-card:before,.form-card:before,.model-card:before,.modal-card:before{content:"";position:absolute;inset:0;background:linear-gradient(150deg,rgba(255,255,255,.08),transparent 32%),radial-gradient(circle at top right,rgba(158,208,255,.16),transparent 35%);pointer-events:none}.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;color:var(--accent);background:rgba(158,208,255,.12);border:1px solid rgba(158,208,255,.18);font-size:.88rem;font-weight:700;letter-spacing:.02em;margin-bottom:22px}.eyebrow:before{content:"";width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 0 7px rgba(158,208,255,.08)}
+    .hero h1{font-size:clamp(3.2rem,8vw,6.6rem);line-height:.92;letter-spacing:-.04em;margin:0 0 22px;max-width:10ch}.hero p{margin:0;max-width:54ch;font-size:clamp(1rem,2vw,1.2rem);line-height:1.75;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:36px}.stat{padding:18px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.stat-no{font-size:1.9rem;font-weight:800;margin-bottom:6px}.stat-label{color:var(--muted);font-size:.94rem;line-height:1.5}
+    .hero-panel{display:grid;grid-template-rows:auto auto 1fr;gap:20px;background:linear-gradient(180deg,rgba(10,20,32,.72),rgba(8,16,25,.88)),url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1200&q=80") center/cover;min-height:580px}.hero-top{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(8,16,25,.52);border:1px solid rgba(255,255,255,.1);font-size:.85rem;color:#f8e6c9}.hero-highlight{align-self:end;padding:24px;border-radius:28px;background:rgba(8,16,25,.68);border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow)}.hero-highlight h2{margin:0 0 10px;font-size:1.6rem}.hero-highlight p{max-width:none;font-size:.98rem;line-height:1.7;color:var(--muted);margin-bottom:18px}.hero-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}.hero-meta div{padding:14px 16px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.hero-meta span{display:block;color:var(--muted);font-size:.82rem;margin-bottom:6px}.hero-meta strong{font-size:1rem;font-weight:700}
+    .section{padding:72px 0}.section-head,.submit-row,.footer-line{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap}.section-title{margin:0;font-size:clamp(2.4rem,6vw,4rem);line-height:.96;letter-spacing:-.04em}.section-desc{margin:-10px 0 0 0;max-width:56ch;color:var(--muted);line-height:1.75}.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:22px}.model-card{border-radius:32px;background:var(--panel);border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow);transition:transform 260ms ease,border-color 260ms ease,box-shadow 260ms ease}.model-card:hover{transform:translateY(-6px);border-color:rgba(110,184,255,.28);box-shadow:0 28px 90px rgba(0,0,0,.52)}.model-image{position:relative;aspect-ratio:4/4.1;overflow:hidden}.model-image img{width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform 500ms ease}.model-card:hover .model-image img{transform:scale(1.08)}.overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,16,25,0) 8%,rgba(8,16,25,.76) 84%),linear-gradient(160deg,rgba(158,208,255,.1),transparent 40%)}.tags{position:absolute;top:18px;left:18px;right:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;z-index:1}.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;font-size:.78rem;font-weight:800;letter-spacing:.02em;background:rgba(8,16,25,.72);border:1px solid rgba(255,255,255,.12)}.tag.accent{color:#e6f4ff;background:rgba(158,208,255,.16);border-color:rgba(158,208,255,.26)}
+    .model-content{position:relative;padding:22px 22px 24px}.model-head{display:flex;align-items:start;justify-content:space-between;gap:16px;margin-bottom:14px}.model-title{margin:0;font-size:1.7rem;line-height:1.05}.model-sub{margin:6px 0 0;color:var(--muted);font-size:.95rem}.price{text-align:right;white-space:nowrap}.price span{display:block;color:var(--muted);font-size:.8rem;margin-bottom:4px}.price strong{font-size:1.7rem;color:#fff7ec}.model-text{color:var(--muted);line-height:1.75;margin:0 0 18px}.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}.spec{padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.spec span{display:block;color:var(--muted);font-size:.78rem;margin-bottom:6px}.spec strong{font-size:.98rem;line-height:1.35}.model-btn{flex:1 1 180px;min-height:50px;font-weight:700}.empty{display:none;padding:28px;border-radius:30px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.18);color:var(--muted);text-align:center}
+    .contact-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:22px;align-items:stretch}.contact-card,.form-card{background:var(--panel);border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow)}.contact-card{display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:linear-gradient(180deg,rgba(11,22,35,.76),rgba(8,16,25,.94)),url("https://images.unsplash.com/photo-1455156218388-5e61b526818b?auto=format&fit=crop&w=1200&q=80") center/cover}.contact-copy{max-width:44ch;color:var(--muted);line-height:1.8}.contact-points{display:grid;gap:14px}.point{padding:16px 18px;border-radius:22px;background:rgba(8,16,25,.56);border:1px solid rgba(255,255,255,.1)}.point small{display:block;color:var(--accent);font-size:.78rem;margin-bottom:6px;letter-spacing:.03em;text-transform:uppercase}.point strong,.point a{font-size:1rem;line-height:1.5;word-break:break-word}.copy-btn{margin-top:18px;width:fit-content}.form-card{background:var(--panel2)}
+    .form{display:grid;gap:16px}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:grid;gap:8px}.field label{color:var(--muted);font-size:.92rem}.field input,.field textarea{width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--text);padding:16px 18px;transition:border-color var(--ease),background var(--ease),transform var(--ease)}.field input::placeholder,.field textarea::placeholder{color:rgba(198,208,218,.7)}.field input:focus,.field textarea:focus{outline:none;border-color:rgba(158,208,255,.4);background:rgba(255,255,255,.06);transform:translateY(-1px)}.field textarea{min-height:160px;resize:vertical}.field-meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:.82rem}.hint{min-height:1.2em;color:var(--err)}.status{min-height:1.3em;font-size:.95rem}.status.success{color:var(--ok)}.status.error{color:var(--err)}
+    .footer{padding:28px 0 42px;color:rgba(198,208,218,.72);font-size:.9rem}.footer-line{padding-top:22px;border-top:1px solid rgba(255,255,255,.08)}.reveal{opacity:0;transform:translateY(24px);transition:opacity 500ms ease,transform 500ms ease}.reveal.is-visible{opacity:1;transform:translateY(0)}
+    .modal{position:fixed;inset:0;display:grid;place-items:center;padding:24px;background:rgba(2,7,12,.72);opacity:0;visibility:hidden;transition:opacity var(--ease),visibility var(--ease);z-index:30}.modal.is-open{opacity:1;visibility:visible}.modal-card{width:min(980px,100%);max-height:min(90vh,900px);overflow:auto;border-radius:34px;background:var(--panel2);border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow)}.close{position:sticky;top:14px;margin-left:auto;margin-right:14px;margin-top:14px;z-index:2;width:46px;height:46px;border-radius:50%;background:rgba(8,16,25,.72);border:1px solid rgba(255,255,255,.12);font-size:1.35rem}.modal-body{padding:0 22px 26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.88fr);gap:24px}.modal-image{border-radius:28px;overflow:hidden;min-height:420px}.modal-image img{width:100%;height:100%;object-fit:cover}.modal-copy{display:grid;gap:18px;align-content:start;padding-bottom:10px}.modal-copy h3{margin:0;font-size:clamp(2rem,4vw,3rem);line-height:.98}.modal-copy p{margin:0;color:var(--muted);line-height:1.75}.modal-price{display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--text);font-size:1.15rem;font-weight:700}.modal-price strong{font-size:2rem;color:#fff7ec}.list{display:grid;gap:10px;padding:0;margin:0;list-style:none}.list li{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--muted)}.list li strong{color:var(--text);display:block;margin-bottom:4px;font-size:.95rem}
+    @media (max-width:1120px){.hero-grid,.contact-grid,.modal-body{grid-template-columns:1fr}.models{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-panel{min-height:440px}}@media (max-width:760px){.nav,.section-head,.submit-row,.footer-line{flex-direction:column;align-items:stretch}.nav{border-radius:30px;align-items:start}.nav-links,.lang-switcher{justify-content:flex-start}.hero{min-height:auto;padding-top:16px}.hero-copy,.hero-panel,.contact-card,.form-card{border-radius:28px}.stats,.specs,.row{grid-template-columns:1fr}.models{grid-template-columns:1fr}.model-actions,.hero-actions,.modal-actions{flex-direction:column}.model-btn,.btn{width:100%}.modal{padding:12px}.modal-card{border-radius:26px}.modal-body{padding:0 14px 20px}.modal-image:min-height:280px}}
+    .section-head{margin-bottom:80px}
+  </style>
+</head>
+<body>
+  <div class="nav-shell">
+    <div class="wrap">
+      <nav class="nav glass" aria-label="Primary">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">WC</div>
+          <div>
+            <div class="brand-title">WINTERCRAFT</div>
+            <div class="brand-sub" id="brand-subtitle">Premium lesene sani</div>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="#models" id="nav-models">Modeli</a>
+          <a href="#contact" id="nav-contact">Kontakt</a>
+        </div>
+        <div class="lang-switcher" aria-label="Language switcher">
+          <button type="button" data-lang="sl" class="is-active">SL</button>
+          <button type="button" data-lang="hr">HR</button>
+          <button type="button" data-lang="it">IT</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="de">DE</button>
+          <button type="button" data-lang="fr">FR</button>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <article class="hero-copy glass reveal">
+          <div class="eyebrow" id="hero-eyebrow">Delavnica v slovenskih Alpah</div>
+          <h1 class="display" id="hero-title">Sani, ki izgledajo vrhunsko in vozijo se bolje.</h1>
+          <p id="hero-description">Ročno izdelani modeli WinterCraft združujejo tradicijo, udobje in natančno izdelavo. Stran je zdaj osredotočena na modele in hiter stik.</p>
+          <div class="hero-actions">
+            <button type="button" class="btn primary" data-scroll="models" id="hero-primary">Poglej modele</button>
+            <button type="button" class="btn secondary" data-scroll="contact" id="hero-secondary">Pošlji povpraševanje</button>
+          </div>
+          <div class="stats">
+            <div class="stat"><div class="stat-no" id="stat-no-1">18</div><div class="stat-label" id="stat-label-1">let ročne izdelave</div></div>
+            <div class="stat"><div class="stat-no" id="stat-no-2">100%</div><div class="stat-label" id="stat-label-2">masiven les in kovina</div></div>
+            <div class="stat"><div class="stat-no" id="stat-no-3">6</div><div class="stat-label" id="stat-label-3">jezikov na eni strani</div></div>
+          </div>
+        </article>
+
+        <aside class="hero-panel glass reveal">
+          <div class="hero-top">
+            <div class="pill" id="hero-badge">Zimska kolekcija 2026</div>
+            <div class="pill" id="hero-badge-2">Majhne serije</div>
+          </div>
+          <div></div>
+          <div class="hero-highlight">
+            <h2 class="display" id="hero-highlight-title">Spoznajte modele brez odvečnih korakov</h2>
+            <p id="hero-highlight-text">Filtrirajte zbirko, odprite hiter pregled modela in pošljite vprašanje z že izpolnjenim zanimanjem za izbrani model.</p>
+            <div class="hero-meta">
+              <div><span id="hero-meta-label-1">Najbolj iskan model</span><strong id="hero-meta-value-1">Aurora Family</strong></div>
+              <div><span id="hero-meta-label-2">Priprava naročila</span><strong id="hero-meta-value-2">3 do 5 delovnih dni</strong></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="models">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow" id="models-eyebrow">Izbrani modeli</div>
+            <h2 class="section-title display" id="models-title">Izberite slog vožnje</h2>
+          </div>
+          <p class="section-desc" id="models-description">Vsak model ima hitro primerjavo, podrobni pregled in možnost, da zanimanje prenesemo neposredno v kontaktni obrazec.</p>
+        </div>
+        <div class="models" id="models-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap contact-grid">
+        <article class="contact-card reveal">
+          <div>
+            <div class="eyebrow" id="contact-eyebrow">Kontakt WinterCraft</div>
+            <h2 class="section-title display" id="contact-title">Pošljite nam povpraševanje</h2>
+            <p class="contact-copy" id="contact-description">Če obiskovalec želi več informacij o modelu, dostavi ali personalizaciji, lahko vprašanje pošlje v nekaj sekundah.</p>
+          </div>
+          <div class="contact-points">
+            <div class="point"><small id="contact-mail-label">E-pošta</small><a href="mailto:hello@wintercraft.com">hello@wintercraft.com</a></div>
+            <div class="point"><small id="contact-phone-label">Telefon</small><a href="tel:+38612345678">+386 1 234 5678</a></div>
+            <div class="point"><small id="contact-workshop-label">Delavnica</small><strong id="contact-workshop-value">Gorenjska, Slovenija</strong></div>
+          </div>
+          <button type="button" class="btn ghost copy-btn" id="copy-email-button">Kopiraj e-pošto</button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-line">
+        <span id="footer-copy">Ročno izdelano v slovenskih Alpah.</span>
+        <span id="footer-meta">WinterCraft • <span id="footer-year"></span></span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="model-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <button type="button" class="close" id="modal-close" aria-label="Close">×</button>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      sl: {
+        metaTitle: "WinterCraft • Premium lesene sani",
+        brandSubtitle: "Premium lesene sani",
+        navModels: "Modeli",
+        navContact: "Kontakt",
+        heroEyebrow: "Delavnica v slovenskih Alpah",
+        heroTitle: "Sani, ki izgledajo vrhunsko in vozijo še bolje.",
+        heroDescription: "Ročno izdelani modeli WinterCraft združujejo tradicijo, udobje in natančno izdelavo. Stran je zdaj osredotočena samo na modele in hiter stik.",
+        heroPrimary: "Poglej modele",
+        heroSecondary: "Pošlji povpraševanje",
+        stats: [{ number: "18", label: "let ročne izdelave" }, { number: "100%", label: "masiven les in kovina" }, { number: "6", label: "jezikov na eni strani" }],
+        heroBadge: "Zimska kolekcija 2026",
+        heroBadge2: "Majhne serije",
+        heroHighlightTitle: "Spoznajte modele brez odvečnih korakov",
+        heroHighlightText: "Filtrirajte zbirko, odprite hiter pregled modela in pošljite vprašanje z že izpolnjenim zanimanjem za izbrani model.",
+        heroMeta1Label: "Najbolj iskan model",
+        heroMeta1Value: "Aurora Family",
+        heroMeta2Label: "Priprava naročila",
+        heroMeta2Value: "3 do 5 delovnih dni",
+        modelsEyebrow: "Izbrani modeli",
+        modelsTitle: "Izberite slog vožnje",
+        modelsDescription: "Vsak model ima hitro primerjavo, podrobni pregled in možnost, da zanimanje prenesemo neposredno v kontaktni obrazec.",
+        cardPriceLabel: "Cena od",
+        viewDetails: "Podrobnosti",
+        inquireModel: "Zanima me ta model",
+        tags: { family: "Družina", speed: "Hitrost", premium: "Premium", bestseller: "Najbolj priljubljen", new: "Novo", handcrafted: "Ročna izdelava" },
+        specs: { seats: "Sedeži", terrain: "Teren", finish: "Obdelava" },
+        modalPriceLabel: "Okvirna cena",
+        modalFeaturesTitle: "Zakaj izbrati ta model",
+        modalPrimary: "Pošlji povpraševanje",
+        modalSecondary: "Nazaj na modele",
+        contactEyebrow: "Kontakt WinterCraft",
+        contactTitle: "Pošljite nam povpraševanje",
+        contactDescription: "Če obiskovalec želi več informacij o modelu, dostavi ali personalizaciji, lahko vprašanje pošlje v nekaj sekundah.",
+        contactMailLabel: "E-pošta",
+        contactPhoneLabel: "Telefon",
+        contactWorkshopLabel: "Delavnica",
+        contactWorkshopValue: "Gorenjska, Slovenija",
+        copyEmail: "Kopiraj e-pošto",
+        copiedEmail: "E-pošta je kopirana.",
+        labels: { firstName: "Ime", lastName: "Priimek", email: "E-poštni naslov", modelInterest: "Zanimanje za model", message: "Sporočilo" },
+        placeholders: { firstName: "Vnesite ime", lastName: "Vnesite priimek", email: "ime@podjetje.com", modelInterest: "Na primer: Aurora Family", message: "Povejte nam, kateri model vas zanima, komu je namenjen in kdaj ga potrebujete." },
+        submit: "Pošlji sporočilo",
+        messageCounter: "{count} / 320",
+        validationShort: "Dodajte vsaj 20 znakov, da bomo lažje pomagali.",
+        validationRequired: "Izpolnite ime, e-pošto in sporočilo.",
+        validationEmail: "Vnesite veljaven e-poštni naslov.",
+        successMessage: "Hvala. Povpraševanje je pripravljeno in obrazec je bil ponastavljen.",
+        footerCopy: "Ročno izdelano v slovenskih Alpah."
+      },
+      hr: {
+        metaTitle: "WinterCraft • Premium drvene saonice",
+        brandSubtitle: "Premium drvene saonice",
+        navModels: "Modeli",
+        navContact: "Kontakt",
+        heroEyebrow: "Radionica u slovenskim Alpama",
+        heroTitle: "Saonice koje izgledaju vrhunski i voze još bolje.",
+        heroDescription: "Ručno izrađeni WinterCraft modeli spajaju tradiciju, udobnost i preciznu izradu. Stranica je sada fokusirana samo na modele i brz kontakt.",
+        heroPrimary: "Pogledaj modele",
+        heroSecondary: "Pošalji upit",
+        stats: [{ number: "18", label: "godina ručne izrade" }, { number: "100%", label: "masivno drvo i metal" }, { number: "6", label: "jezika na jednoj stranici" }],
+        heroBadge: "Zimska kolekcija 2026",
+        heroBadge2: "Male serije",
+        heroHighlightTitle: "Upoznajte modele bez suvišnih koraka",
+        heroHighlightText: "Filtrirajte kolekciju, otvorite brzi pregled modela i pošaljite pitanje s već upisanim interesom za odabrani model.",
+        heroMeta1Label: "Najtraženiji model",
+        heroMeta1Value: "Aurora Family",
+        heroMeta2Label: "Priprema narudžbe",
+        heroMeta2Value: "3 do 5 radnih dana",
+        modelsEyebrow: "Odabrani modeli",
+        modelsTitle: "Odaberite stil vožnje",
+        modelsDescription: "Svaki model ima brzu usporedbu, detaljan pregled i mogućnost da interes prenesemo izravno u kontakt obrazac.",
+        cardPriceLabel: "Cijena od",
+        viewDetails: "Detalji",
+        inquireModel: "Zanima me ovaj model",
+        tags: { family: "Obitelj", speed: "Brzina", premium: "Premium", bestseller: "Najpopularniji", new: "Novo", handcrafted: "Ručno izrađeno" },
+        specs: { seats: "Sjedala", terrain: "Teren", finish: "Obrada" },
+        modalPriceLabel: "Okvirna cijena",
+        modalFeaturesTitle: "Zašto odabrati ovaj model",
+        modalPrimary: "Pošalji upit",
+        modalSecondary: "Natrag na modele",
+        contactEyebrow: "Kontakt WinterCraft",
+        contactTitle: "Pošaljite nam upit",
+        contactDescription: "Ako posjetitelj želi više informacija o modelu, dostavi ili personalizaciji, pitanje može poslati za nekoliko sekundi.",
+        contactMailLabel: "E-pošta",
+        contactPhoneLabel: "Telefon",
+        contactWorkshopLabel: "Radionica",
+        contactWorkshopValue: "Gorenjska, Slovenija",
+        copyEmail: "Kopiraj e-poštu",
+        copiedEmail: "E-pošta je kopirana.",
+        labels: { firstName: "Ime", lastName: "Prezime", email: "E-mail adresa", modelInterest: "Interes za model", message: "Poruka" },
+        placeholders: { firstName: "Unesite ime", lastName: "Unesite prezime", email: "ime@tvrtka.com", modelInterest: "Na primjer: Aurora Family", message: "Recite nam koji vas model zanima, kome je namijenjen i kada vam je potreban." },
+        submit: "Pošalji poruku",
+        messageCounter: "{count} / 320",
+        validationShort: "Dodajte barem 20 znakova kako bismo lakše pomogli.",
+        validationRequired: "Ispunite ime, e-mail i poruku.",
+        validationEmail: "Unesite valjanu e-mail adresu.",
+        successMessage: "Hvala. Upit je pripremljen i forma je resetirana.",
+        footerCopy: "Ručno izrađeno u slovenskim Alpama."
+      },
+      it: {
+        metaTitle: "WinterCraft • Slitte premium in legno",
+        brandSubtitle: "Slitte premium in legno",
+        navModels: "Modelli",
+        navContact: "Contatti",
+        heroEyebrow: "Laboratorio nelle Alpi slovene",
+        heroTitle: "Slitte che sembrano premium e scorrono ancora meglio.",
+        heroDescription: "I modelli WinterCraft realizzati a mano uniscono tradizione, comfort e precisione artigianale. La pagina ora e focalizzata solo su modelli e contatto rapido.",
+        heroPrimary: "Scopri i modelli",
+        heroSecondary: "Invia una richiesta",
+        stats: [{ number: "18", label: "anni di lavorazione artigianale" }, { number: "100%", label: "legno massello e metallo" }, { number: "6", label: "lingue in una sola pagina" }],
+        heroBadge: "Collezione inverno 2026",
+        heroBadge2: "Piccole serie",
+        heroHighlightTitle: "Scopri i modelli senza passaggi inutili",
+        heroHighlightText: "Filtra la collezione, apri una scheda rapida del modello e invia una domanda con l'interesse gia precompilato.",
+        heroMeta1Label: "Modello piu richiesto",
+        heroMeta1Value: "Aurora Family",
+        heroMeta2Label: "Preparazione ordine",
+        heroMeta2Value: "3-5 giorni lavorativi",
+        modelsEyebrow: "Modelli selezionati",
+        modelsTitle: "Scegli il tuo stile di guida",
+        modelsDescription: "Ogni modello include un confronto rapido, una vista dettagliata e la possibilita di trasferire direttamente l'interesse nel modulo di contatto.",
+        cardPriceLabel: "Prezzo da",
+        viewDetails: "Dettagli",
+        inquireModel: "Mi interessa questo modello",
+        tags: { family: "Famiglia", speed: "Velocita", premium: "Premium", bestseller: "Piu richiesto", new: "Novita", handcrafted: "Fatto a mano" },
+        specs: { seats: "Posti", terrain: "Terreno", finish: "Finitura" },
+        modalPriceLabel: "Prezzo indicativo",
+        modalFeaturesTitle: "Perche scegliere questo modello",
+        modalPrimary: "Invia una richiesta",
+        modalSecondary: "Torna ai modelli",
+        contactEyebrow: "Contatto WinterCraft",
+        contactTitle: "Inviaci una richiesta",
+        contactDescription: "Se il visitatore desidera piu informazioni su modello, consegna o personalizzazione, puo inviare il messaggio in pochi secondi.",
+        contactMailLabel: "E-mail",
+        contactPhoneLabel: "Telefono",
+        contactWorkshopLabel: "Laboratorio",
+        contactWorkshopValue: "Alta Carniola, Slovenia",
+        copyEmail: "Copia e-mail",
+        copiedEmail: "E-mail copiata.",
+        labels: { firstName: "Nome", lastName: "Cognome", email: "Indirizzo e-mail", modelInterest: "Interesse per il modello", message: "Messaggio" },
+        placeholders: { firstName: "Inserisci il nome", lastName: "Inserisci il cognome", email: "nome@azienda.com", modelInterest: "Per esempio: Aurora Family", message: "Dicci quale modello ti interessa, per chi e pensato e quando ti serve." },
+        submit: "Invia messaggio",
+        messageCounter: "{count} / 320",
+        validationShort: "Aggiungi almeno 20 caratteri cosi possiamo aiutarti meglio.",
+        validationRequired: "Compila nome, e-mail e messaggio.",
+        validationEmail: "Inserisci un indirizzo e-mail valido.",
+        successMessage: "Grazie. La richiesta e pronta e il modulo e stato reimpostato.",
+        footerCopy: "Realizzato a mano nelle Alpi slovene."
+      },
+      en: {
+        metaTitle: "WinterCraft • Premium wooden sleds",
+        brandSubtitle: "Premium wooden sleds",
+        navModels: "Models",
+        navContact: "Contact",
+        heroEyebrow: "Workshop in the Slovenian Alps",
+        heroTitle: "Sleds that look premium and ride even better.",
+        heroDescription: "Handcrafted WinterCraft models combine tradition, comfort, and precise workmanship. The page now focuses only on models and fast contact.",
+        heroPrimary: "Explore models",
+        heroSecondary: "Send an inquiry",
+        stats: [{ number: "18", label: "years of craftsmanship" }, { number: "100%", label: "solid wood and metal" }, { number: "6", label: "languages on one page" }],
+        heroBadge: "Winter collection 2026",
+        heroBadge2: "Small batches",
+        heroHighlightTitle: "Discover the models without extra steps",
+        heroHighlightText: "Filter the collection, open a quick model overview, and send a message with the chosen model already filled in.",
+        heroMeta1Label: "Most requested model",
+        heroMeta1Value: "Aurora Family",
+        heroMeta2Label: "Order preparation",
+        heroMeta2Value: "3 to 5 business days",
+        modelsEyebrow: "Selected models",
+        modelsTitle: "Choose your riding style",
+        modelsDescription: "Every model includes a quick comparison, a richer detail view, and a way to carry interest straight into the contact form.",
+        cardPriceLabel: "Starting at",
+        viewDetails: "View details",
+        inquireModel: "I am interested in this model",
+        tags: { family: "Family", speed: "Speed", premium: "Premium", bestseller: "Best seller", new: "New", handcrafted: "Handcrafted" },
+        specs: { seats: "Seats", terrain: "Terrain", finish: "Finish" },
+        modalPriceLabel: "Estimated price",
+        modalFeaturesTitle: "Why choose this model",
+        modalPrimary: "Send inquiry",
+        modalSecondary: "Back to models",
+        contactEyebrow: "Contact WinterCraft",
+        contactTitle: "Send us an inquiry",
+        contactDescription: "If a visitor wants more information about a model, delivery, or personalization, they can send a message in seconds.",
+        contactMailLabel: "Email",
+        contactPhoneLabel: "Phone",
+        contactWorkshopLabel: "Workshop",
+        contactWorkshopValue: "Upper Carniola, Slovenia",
+        copyEmail: "Copy email",
+        copiedEmail: "Email copied.",
+        labels: { firstName: "First name", lastName: "Last name", email: "Email address", modelInterest: "Model interest", message: "Message" },
+        placeholders: { firstName: "Enter first name", lastName: "Enter last name", email: "name@company.com", modelInterest: "For example: Aurora Family", message: "Tell us which model you like, who it is for, and when you need it." },
+        submit: "Send message",
+        messageCounter: "{count} / 320",
+        validationShort: "Add at least 20 characters so we can help properly.",
+        validationRequired: "Please fill in name, email, and message.",
+        validationEmail: "Please enter a valid email address.",
+        successMessage: "Thanks. Your inquiry is ready and the form has been reset.",
+        footerCopy: "Handcrafted in the Slovenian Alps."
+      },
+      de: {
+        metaTitle: "WinterCraft • Premium Holzschlitten",
+        brandSubtitle: "Premium Holzschlitten",
+        navModels: "Modelle",
+        navContact: "Kontakt",
+        heroEyebrow: "Werkstatt in den slowenischen Alpen",
+        heroTitle: "Schlitten, die hochwertig aussehen und noch besser fahren.",
+        heroDescription: "Die handgefertigten WinterCraft Modelle verbinden Tradition, Komfort und präzise Verarbeitung. Die Seite konzentriert sich jetzt nur noch auf Modelle und schnellen Kontakt.",
+        heroPrimary: "Modelle ansehen",
+        heroSecondary: "Anfrage senden",
+        stats: [{ number: "18", label: "Jahre Handwerkskunst" }, { number: "100%", label: "Massivholz und Metall" }, { number: "6", label: "Sprachen auf einer Seite" }],
+        heroBadge: "Winterkollektion 2026",
+        heroBadge2: "Kleine Serien",
+        heroHighlightTitle: "Modelle ohne unnötige Schritte entdecken",
+        heroHighlightText: "Filtern Sie die Kollektion, öffnen Sie eine schnelle Modellansicht und senden Sie eine Anfrage mit bereits vorausgefülltem Interesse.",
+        heroMeta1Label: "Meistgefragtes Modell",
+        heroMeta1Value: "Aurora Family",
+        heroMeta2Label: "Auftragsvorbereitung",
+        heroMeta2Value: "3 bis 5 Werktage",
+        modelsEyebrow: "Ausgewählte Modelle",
+        modelsTitle: "Wählen Sie Ihren Fahrstil",
+        modelsDescription: "Jedes Modell bietet einen schnellen Vergleich, eine detailreiche Ansicht und die Möglichkeit, das Interesse direkt in das Kontaktformular zu übernehmen.",
+        cardPriceLabel: "Preis ab",
+        viewDetails: "Details ansehen",
+        inquireModel: "Ich interessiere mich für dieses Modell",
+        tags: { family: "Familie", speed: "Tempo", premium: "Premium", bestseller: "Bestseller", new: "Neu", handcrafted: "Handgefertigt" },
+        specs: { seats: "Sitze", terrain: "Gelände", finish: "Finish" },
+        modalPriceLabel: "Richtpreis",
+        modalFeaturesTitle: "Warum dieses Modell",
+        modalPrimary: "Anfrage senden",
+        modalSecondary: "Zurück zu den Modellen",
+        contactEyebrow: "Kontakt WinterCraft",
+        contactTitle: "Senden Sie uns eine Anfrage",
+        contactDescription: "Wenn ein Besucher mehr Informationen zu Modell, Lieferung oder Personalisierung möchte, kann er in wenigen Sekunden eine Nachricht senden.",
+        contactMailLabel: "E-Mail",
+        contactPhoneLabel: "Telefon",
+        contactWorkshopLabel: "Werkstatt",
+        contactWorkshopValue: "Oberkrain, Slowenien",
+        copyEmail: "E-Mail kopieren",
+        copiedEmail: "E-Mail kopiert.",
+        labels: { firstName: "Vorname", lastName: "Nachname", email: "E-Mail-Adresse", modelInterest: "Interesse am Modell", message: "Nachricht" },
+        placeholders: { firstName: "Vorname eingeben", lastName: "Nachname eingeben", email: "name@firma.com", modelInterest: "Zum Beispiel: Aurora Family", message: "Sagen Sie uns, welches Modell Sie interessiert, für wen es gedacht ist und wann Sie es brauchen." },
+        submit: "Nachricht senden",
+        messageCounter: "{count} / 320",
+        validationShort: "Bitte geben Sie mindestens 20 Zeichen ein, damit wir besser helfen können.",
+        validationRequired: "Bitte füllen Sie Vorname, E-Mail und Nachricht aus.",
+        validationEmail: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        successMessage: "Danke. Die Anfrage ist vorbereitet und das Formular wurde zurückgesetzt.",
+        footerCopy: "Handgefertigt in den slowenischen Alpen."
+      },
+      fr: {
+        metaTitle: "WinterCraft • Luges premium en bois",
+        brandSubtitle: "Luges premium en bois",
+        navModels: "Modèles",
+        navContact: "Contact",
+        heroEyebrow: "Atelier dans les Alpes slovènes",
+        heroTitle: "Des luges au look premium et à la glisse encore meilleure.",
+        heroDescription: "Les modèles WinterCraft fabriqués à la main réunissent tradition, confort et précision artisanale. La page se concentre désormais uniquement sur les modèles et un contact rapide.",
+        heroPrimary: "Voir les modèles",
+        heroSecondary: "Envoyer une demande",
+        stats: [{ number: "18", label: "ans de savoir-faire" }, { number: "100%", label: "bois massif et métal" }, { number: "6", label: "langues sur une seule page" }],
+        heroBadge: "Collection hiver 2026",
+        heroBadge2: "Petites séries",
+        heroHighlightTitle: "Découvrez les modèles sans étapes inutiles",
+        heroHighlightText: "Filtrez la collection, ouvrez une vue rapide du modèle et envoyez une demande avec le modèle déjà renseigné.",
+        heroMeta1Label: "Modèle le plus demandé",
+        heroMeta1Value: "Aurora Family",
+        heroMeta2Label: "Préparation de commande",
+        heroMeta2Value: "3 à 5 jours ouvrés",
+        modelsEyebrow: "Modèles sélectionnés",
+        modelsTitle: "Choisissez votre style de glisse",
+        modelsDescription: "Chaque modèle propose une comparaison rapide, une vue détaillée et un transfert direct de l'intérêt vers le formulaire de contact.",
+        cardPriceLabel: "Prix à partir de",
+        viewDetails: "Voir les détails",
+        inquireModel: "Ce modèle m'intéresse",
+        tags: { family: "Famille", speed: "Vitesse", premium: "Premium", bestseller: "Meilleure vente", new: "Nouveau", handcrafted: "Fait main" },
+        specs: { seats: "Places", terrain: "Terrain", finish: "Finition" },
+        modalPriceLabel: "Prix indicatif",
+        modalFeaturesTitle: "Pourquoi choisir ce modèle",
+        modalPrimary: "Envoyer une demande",
+        modalSecondary: "Retour aux modèles",
+        contactEyebrow: "Contact WinterCraft",
+        contactTitle: "Envoyez-nous une demande",
+        contactDescription: "Si un visiteur souhaite plus d'informations sur un modèle, la livraison ou la personnalisation, il peut envoyer son message en quelques secondes.",
+        contactMailLabel: "E-mail",
+        contactPhoneLabel: "Téléphone",
+        contactWorkshopLabel: "Atelier",
+        contactWorkshopValue: "Haute-Carniole, Slovénie",
+        copyEmail: "Copier l'e-mail",
+        copiedEmail: "E-mail copié.",
+        labels: { firstName: "Prénom", lastName: "Nom", email: "Adresse e-mail", modelInterest: "Modèle souhaité", message: "Message" },
+        placeholders: { firstName: "Saisissez le prénom", lastName: "Saisissez le nom", email: "nom@entreprise.com", modelInterest: "Par exemple: Aurora Family", message: "Dites-nous quel modèle vous intéresse, pour qui il est prévu et quand vous en avez besoin." },
+        submit: "Envoyer le message",
+        messageCounter: "{count} / 320",
+        validationShort: "Ajoutez au moins 20 caractères pour que nous puissions bien vous aider.",
+        validationRequired: "Veuillez renseigner le prénom, l'e-mail et le message.",
+        validationEmail: "Veuillez saisir une adresse e-mail valide.",
+        successMessage: "Merci. La demande est prête et le formulaire a été réinitialisé.",
+        footerCopy: "Fabriqué à la main dans les Alpes slovènes."
+      }
+    };
+
+    const models = [
+      {
+        id: "aurora",
+        price: "180 €",
+        image: "https://www.image2url.com/r2/default/images/1776181168619-16f2b3d8-4c9e-4143-a643-a9bb84c19afb.jpg",
+        tags: ["bestseller"],
+        copy: {
+          sl: { name: "Aurora Family", subtitle: "Topel družinski favorit", description: "Stabilen model za skupne spuste, mehko oblazinjen sedež in več prostora za mirnejšo vožnjo.", seats: "2 osebi", terrain: "Urejena pobočja", finish: "Oljeni hrast", features: [{ title: "Udobna geometrija", text: "Daljše sedalo in višji naslon za bolj sproščeno vožnjo otrok in staršev." }, { title: "Zanesljiv oprijem", text: "Širši kovinski tekači držijo smer tudi na tršem snegu." }, { title: "Pripravljeno za darilo", text: "Na voljo z gravuro imena in zaščitnim trakom za transport." }] },
+          hr: { name: "Aurora Family", subtitle: "Topli obiteljski favorit", description: "Stabilan model za zajedničke spuste, mekano obloženo sjedalo i više prostora za mirniju vožnju.", seats: "2 osobe", terrain: "Uređene padine", finish: "Uljeni hrast", features: [{ title: "Udobna geometrija", text: "Dulje sjedalo i viši naslon za opušteniju vožnju djece i roditelja." }, { title: "Pouzdano držanje", text: "Širi metalni klizači drže smjer i na tvrđem snijegu." }, { title: "Spremno za poklon", text: "Dostupno s gravurom imena i zaštitnom trakom za transport." }] },
+          it: { name: "Aurora Family", subtitle: "Il preferito per la famiglia", description: "Modello stabile per discese condivise, seduta morbida imbottita e più spazio per una guida rilassata.", seats: "2 persone", terrain: "Piste battute", finish: "Rovere oliato", features: [{ title: "Geometria confortevole", text: "Seduta più lunga e schienale più alto per una guida più rilassata." }, { title: "Tenuta affidabile", text: "I pattini metallici più larghi mantengono la traiettoria anche sulla neve dura." }, { title: "Pronto per regalo", text: "Disponibile con incisione del nome e nastro protettivo per il trasporto." }] },
+          en: { name: "Aurora Family", subtitle: "Warm family favorite", description: "A stable model for shared downhill runs with a cushioned seat and extra room for a calmer ride.", seats: "2 riders", terrain: "Groomed slopes", finish: "Oiled oak", features: [{ title: "Comfort geometry", text: "A longer seat and higher backrest make family rides feel relaxed and secure." }, { title: "Reliable grip", text: "Wider metal runners stay on line even when the snow turns firm." }, { title: "Gift ready", text: "Available with name engraving and a transport protection strap." }] },
+          de: { name: "Aurora Family", subtitle: "Warmes Familienmodell", description: "Ein stabiles Modell für gemeinsame Abfahrten mit gepolstertem Sitz und mehr Platz für ruhiges Fahren.", seats: "2 Personen", terrain: "Präparierte Hänge", finish: "Geölte Eiche", features: [{ title: "Komfortable Geometrie", text: "Längere Sitzfläche und höhere Lehne sorgen für entspannte Familienfahrten." }, { title: "Zuverlässiger Halt", text: "Breitere Metallkufen halten die Spur auch auf festerem Schnee." }, { title: "Als Geschenk bereit", text: "Mit Namensgravur und Schutzband für den Transport erhältlich." }] },
+          fr: { name: "Aurora Family", subtitle: "Le favori des familles", description: "Un modèle stable pour les descentes à plusieurs avec assise rembourrée et plus d'espace pour une glisse sereine.", seats: "2 personnes", terrain: "Pentes damées", finish: "Chêne huilé", features: [{ title: "Géométrie confortable", text: "Assise plus longue et dossier plus haut pour des descentes familiales détendues." }, { title: "Accroche fiable", text: "Des patins métalliques plus larges gardent la trajectoire sur neige dure." }, { title: "Prêt à offrir", text: "Disponible avec gravure du prénom et sangle de protection pour le transport." }] }
+        }
+      },
+      {
+        id: "summit",
+        price: "160 €",
+        image: "https://www.image2url.com/r2/default/images/1776178903411-9728fafe-84c9-499a-a741-1f68df920a2b.jpg",
+        tags: ["speed", "new"],
+        copy: {
+          sl: { name: "Summit Racer", subtitle: "Lažji in bolj odziven", description: "Hitrejša postavitev z nižjim težiščem, natančnim vodenjem in športnejšim občutkom na strmejših odsekih.", seats: "1 oseba", terrain: "Strma pobočja", finish: "Mat jesen", features: [{ title: "Nižje težišče", text: "Kompaktna oblika pomaga pri natančnejšem nadzoru med hitrejšimi spusti." }, { title: "Lažji okvir", text: "Optimizirano razmerje med težo in togostjo za živahen odziv." }, { title: "Športna nastavitev", text: "Agresivnejši kot tekačev za bolj neposreden občutek pri vožnji." }] },
+          hr: { name: "Summit Racer", subtitle: "Lakši i responzivniji", description: "Brža konfiguracija s nižim težištem, preciznijim vođenjem i sportskijim osjećajem na strmijim dionicama.", seats: "1 osoba", terrain: "Strme padine", finish: "Mat jasen", features: [{ title: "Niže težište", text: "Kompaktan oblik pomaže preciznijoj kontroli tijekom brzih spusteva." }, { title: "Lakši okvir", text: "Optimiziran omjer težine i krutosti za življi odziv." }, { title: "Sportsko podešenje", text: "Agresivniji kut klizača za izravniji osjećaj u vožnji." }] },
+          it: { name: "Summit Racer", subtitle: "Più leggero e reattivo", description: "Configurazione più veloce con baricentro basso, guida precisa e sensazione più sportiva sui tratti ripidi.", seats: "1 persona", terrain: "Pendii ripidi", finish: "Frassino opaco", features: [{ title: "Baricentro più basso", text: "La forma compatta aiuta a controllare meglio le discese più veloci." }, { title: "Telaio leggero", text: "Rapporto peso-rigidità ottimizzato per una risposta vivace." }, { title: "Assetto sportivo", text: "Angolo più aggressivo dei pattini per una sensazione diretta in discesa." }] },
+          en: { name: "Summit Racer", subtitle: "Lighter and more responsive", description: "A faster setup with a lower center of gravity, sharper steering, and a sportier feel on steeper sections.", seats: "1 rider", terrain: "Steep slopes", finish: "Matte ash", features: [{ title: "Lower center of gravity", text: "A compact shape helps you stay precise during quicker descents." }, { title: "Lighter frame", text: "An optimized weight-to-stiffness ratio gives the sled a lively response." }, { title: "Sport tuning", text: "A more aggressive runner angle creates a direct, confident ride." }] },
+          de: { name: "Summit Racer", subtitle: "Leichter und direkter", description: "Schnelleres Setup mit niedrigerem Schwerpunkt, präziserer Lenkung und sportlicherem Gefühl auf steileren Abschnitten.", seats: "1 Person", terrain: "Steile Hänge", finish: "Matte Esche", features: [{ title: "Niedriger Schwerpunkt", text: "Die kompakte Form sorgt für mehr Präzision bei schnellen Abfahrten." }, { title: "Leichter Rahmen", text: "Optimiertes Verhältnis aus Gewicht und Steifigkeit für lebendige Reaktionen." }, { title: "Sportliches Setup", text: "Ein aggressiverer Kufenwinkel vermittelt ein direkteres Fahrgefühl." }] },
+          fr: { name: "Summit Racer", subtitle: "Plus léger et plus réactif", description: "Une configuration plus rapide avec centre de gravité abaissé, direction précise et sensation plus sportive sur les pentes raides.", seats: "1 personne", terrain: "Pentes raides", finish: "Frêne mat", features: [{ title: "Centre de gravité plus bas", text: "Une forme compacte aide à garder une trajectoire précise à vitesse élevée." }, { title: "Châssis léger", text: "Un rapport poids-rigidité optimisé offre une réponse vive." }, { title: "Réglage sportif", text: "Un angle de patins plus affirmé procure une glisse plus directe." }] }
+        }
+      }
+    ];
+
+    const state = {
+      lang: localStorage.getItem("wintercraft-language") || "sl",
+      selectedModelId: null
+    };
+
+    const refs = {
+      langButtons: [...document.querySelectorAll("[data-lang]")],
+      scrollButtons: [...document.querySelectorAll("[data-scroll]")],
+      modelsGrid: document.getElementById("models-grid"),
+      modal: document.getElementById("model-modal"),
+      modalBody: document.getElementById("modal-body"),
+      modalClose: document.getElementById("modal-close"),
+      copyEmailButton: document.getElementById("copy-email-button"),
+      footerYear: document.getElementById("footer-year")
+    };
+
+    function t(path) {
+      return path.split(".").reduce((value, key) => value?.[key], translations[state.lang]);
+    }
+
+    function fmt(template, values) {
+      return template.replace(/\{(\w+)\}/g, (_, key) => values[key] ?? "");
+    }
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function getCopy(model) {
+      return model.copy[state.lang] || model.copy.en;
+    }
+
+    function applyTranslations() {
+      document.documentElement.lang = state.lang;
+      document.title = t("metaTitle");
+      setText("brand-subtitle", t("brandSubtitle"));
+      setText("nav-models", t("navModels"));
+      setText("nav-contact", t("navContact"));
+      setText("hero-eyebrow", t("heroEyebrow"));
+      setText("hero-title", t("heroTitle"));
+      setText("hero-description", t("heroDescription"));
+      setText("hero-primary", t("heroPrimary"));
+      setText("hero-secondary", t("heroSecondary"));
+      t("stats").forEach((item, i) => {
+        setText(`stat-no-${i + 1}`, item.number);
+        setText(`stat-label-${i + 1}`, item.label);
+      });
+      setText("hero-badge", t("heroBadge"));
+      setText("hero-badge-2", t("heroBadge2"));
+      setText("hero-highlight-title", t("heroHighlightTitle"));
+      setText("hero-highlight-text", t("heroHighlightText"));
+      setText("hero-meta-label-1", t("heroMeta1Label"));
+      setText("hero-meta-value-1", t("heroMeta1Value"));
+      setText("hero-meta-label-2", t("heroMeta2Label"));
+      setText("hero-meta-value-2", t("heroMeta2Value"));
+      setText("models-eyebrow", t("modelsEyebrow"));
+      setText("models-title", t("modelsTitle"));
+      setText("models-description", t("modelsDescription"));
+      setText("contact-eyebrow", t("contactEyebrow"));
+      setText("contact-title", t("contactTitle"));
+      setText("contact-description", t("contactDescription"));
+      setText("contact-mail-label", t("contactMailLabel"));
+      setText("contact-phone-label", t("contactPhoneLabel"));
+      setText("contact-workshop-label", t("contactWorkshopLabel"));
+      setText("contact-workshop-value", t("contactWorkshopValue"));
+      setText("copy-email-button", t("copyEmail"));
+      setText("footer-copy", t("footerCopy"));
+      refs.langButtons.forEach((btn) => btn.classList.toggle("is-active", btn.dataset.lang === state.lang));
+      renderModels();
+      if (state.selectedModelId) openModal(state.selectedModelId);
+    }
+
+    function renderModels() {
+      refs.modelsGrid.innerHTML = "";
+      models.forEach((model) => {
+        const copy = getCopy(model);
+        const card = document.createElement("article");
+        card.className = "model-card";
+        card.innerHTML = `
+          <div class="model-image">
+            <img src="${model.image}" alt="${copy.name}">
+            <div class="overlay"></div>
+            <div class="tags">
+              <span class="tag accent">${t(`tags.${model.tags[0]}`)}</span>
+              ${model.tags[1] ? `<span class="tag">${t(`tags.${model.tags[1]}`)}</span>` : ''}
+            </div>
+          </div>
+          <div class="model-content">
+            <div class="model-head">
+              <div>
+                <h3 class="model-title display">${copy.name}</h3>
+                <p class="model-sub">${copy.subtitle}</p>
+              </div>
+              <div class="price">
+                <span>${t("cardPriceLabel")}</span>
+                <strong>${model.price}</strong>
+              </div>
+            </div>
+            <p class="model-text">${copy.description}</p>
+            <div class="specs">
+              <div class="spec"><span>${t("specs.seats")}</span><strong>${copy.seats}</strong></div>
+              <div class="spec"><span>${t("specs.terrain")}</span><strong>${copy.terrain}</strong></div>
+              <div class="spec"><span>${t("specs.finish")}</span><strong>${copy.finish}</strong></div>
+            </div>
+            <div class="model-actions">
+              <button type="button" class="model-btn" data-details="${model.id}">${t("viewDetails")}</button>
+            </div>
+          </div>`;
+        refs.modelsGrid.appendChild(card);
+      });
+      document.querySelectorAll("[data-details]").forEach((btn) => btn.addEventListener("click", () => openModal(btn.dataset.details)));
+    }
+
+    function openModal(modelId) {
+      const model = models.find((item) => item.id === modelId);
+      if (!model) return;
+      state.selectedModelId = modelId;
+      const copy = getCopy(model);
+      refs.modalBody.innerHTML = `
+        <div class="modal-image"><img src="${model.image}" alt="${copy.name}"></div>
+        <div class="modal-copy">
+          <div class="eyebrow">${t(`tags.${model.tags[0]}`)}</div>
+          <h3 class="display" id="modal-title">${copy.name}</h3>
+          <p>${copy.subtitle}</p>
+          <div class="modal-price"><span>${t("modalPriceLabel")}</span><strong>${model.price}</strong></div>
+          <p>${copy.description}</p>
+          <div class="specs">
+            <div class="spec"><span>${t("specs.seats")}</span><strong>${copy.seats}</strong></div>
+            <div class="spec"><span>${t("specs.terrain")}</span><strong>${copy.terrain}</strong></div>
+            <div class="spec"><span>${t("specs.finish")}</span><strong>${copy.finish}</strong></div>
+          </div>
+          <strong>${t("modalFeaturesTitle")}</strong>
+          <ul class="list">${copy.features.map((item) => `<li><strong>${item.title}</strong>${item.text}</li>`).join("")}</ul>
+          <div class="modal-actions">
+            <button type="button" class="btn secondary" id="modal-back">${t("modalSecondary")}</button>
+          </div>
+        </div>`;
+      refs.modal.classList.add("is-open");
+      refs.modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      document.getElementById("modal-back")?.addEventListener("click", closeModal);
+    }
+
+    function closeModal() {
+      refs.modal.classList.remove("is-open");
+      refs.modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      state.selectedModelId = null;
+    }
+
+
+    function observeReveals() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
+        });
+      }, { threshold: 0.18 });
+      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    }
+
+    async function copyEmail() {
+      try {
+        await navigator.clipboard.writeText("hello@wintercraft.com");
+        refs.formStatus.textContent = t("copiedEmail");
+        refs.formStatus.className = "status success";
+      } catch (error) {
+        refs.formStatus.textContent = "hello@wintercraft.com";
+        refs.formStatus.className = "status success";
+      }
+    }
+
+    refs.langButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.lang = btn.dataset.lang;
+        localStorage.setItem("wintercraft-language", state.lang);
+        applyTranslations();
+      });
+    });
+
+    refs.scrollButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.getElementById(btn.dataset.scroll)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    refs.modal.addEventListener("click", (event) => {
+      if (event.target === refs.modal) closeModal();
+    });
+
+    refs.modalClose.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && refs.modal.classList.contains("is-open")) closeModal();
+    });
+
+    refs.copyEmailButton.addEventListener("click", copyEmail);
+
+    refs.footerYear.textContent = new Date().getFullYear();
+    observeReveals();
+    applyTranslations();
+  </script>
+</body>
+</html>
