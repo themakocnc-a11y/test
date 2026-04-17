@@ -8,41 +8,1193 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0f1f38;
-      --bg2:#14283f;
-      --panel:rgba(15,31,56,.82);
-      --panel2:rgba(15,31,56,.94);
-      --line:rgba(255,255,255,.12);
-      --text:#f5f1e8;
-      --muted:#c6d0da;
-      --accent:#9ed0ff;
-      --accent2:#6eb8ff;
-      --ok:#8fe1b2;
-      --err:#ff9a96;
-      --shadow:0 24px 80px rgba(0,0,0,.45);
-      --xl:36px;
-      --lg:28px;
-      --md:20px;
-      --wrap:min(1180px,calc(100vw - 32px));
-      --ease:220ms ease
+    /* === CSS VARIABLES === */
+    :root {
+      --bg: #0f1f38;
+      --bg2: #14283f;
+      --panel: rgba(15, 31, 56, 0.82);
+      --panel2: rgba(15, 31, 56, 0.94);
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #f5f1e8;
+      --muted: #c6d0da;
+      --accent: #9ed0ff;
+      --accent2: #6eb8ff;
+      --ok: #8fe1b2;
+      --err: #ff9a96;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      --xl: 36px;
+      --lg: 28px;
+      --md: 20px;
+      --wrap: min(1180px, calc(100vw - 32px));
+      --ease: 220ms ease;
     }
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);background:radial-gradient(circle at top left,rgba(158,208,255,.22),transparent 34%),radial-gradient(circle at 80% 15%,rgba(145,191,255,.18),transparent 28%),linear-gradient(180deg,#0b1c32 0%,#13253f 40%,#0f1f38 100%);font-family:"Manrope",sans-serif;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.05) 0%,transparent 28%),linear-gradient(transparent 0%,rgba(255,255,255,.04) 100%);pointer-events:none;z-index:-3}body:after{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 92%);pointer-events:none;z-index:-2}
-    a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}button{cursor:pointer;border:0;padding:0;background:none;color:inherit}img{max-width:100%;display:block}.wrap{width:var(--wrap);margin:0 auto}.display{font-family:"Cormorant Garamond",serif}.glass{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(18px);box-shadow:var(--shadow)}
-    .nav-shell{position:sticky;top:16px;z-index:20;padding:16px 0 0}.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 20px;border-radius:999px}.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand-mark{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,rgba(158,208,255,.28),rgba(110,184,255,.2));border:1px solid rgba(255,255,255,.14);color:var(--accent);font-size:18px;flex:0 0 auto}.brand-title{font-size:.95rem;letter-spacing:.24em;font-weight:800;white-space:nowrap}.brand-sub{font-size:.78rem;color:var(--muted);white-space:nowrap}.nav-links,.lang-switcher,.hero-actions,.model-actions,.modal-actions{display:flex;gap:12px;flex-wrap:wrap}.nav-links{justify-content:center}.nav-links a{padding:10px 14px;border-radius:999px;color:var(--muted);transition:background var(--ease),color var(--ease)}.nav-links a:hover,.nav-links a:focus-visible{background:rgba(255,255,255,.08);color:var(--text);outline:none}
-    .lang-switcher button,.btn,.model-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 18px;border-radius:999px;transition:transform var(--ease),border-color var(--ease),background var(--ease),color var(--ease),box-shadow var(--ease)}.lang-switcher button{min-width:46px;background:rgba(255,255,255,.06);color:var(--muted);border:1px solid transparent}.lang-switcher button:hover,.lang-switcher button:focus-visible,.btn:hover,.btn:focus-visible,.model-btn:hover,.model-btn:focus-visible{transform:translateY(-2px);outline:none}.lang-switcher button.is-active,.model-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:rgba(110,184,255,.4);color:#fff7ec}
-    .btn{min-height:54px;padding:0 22px}.btn.primary,.model-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#1d1208;font-weight:800;box-shadow:0 18px 40px rgba(110,184,255,.18);border:0}.btn.secondary,.btn.ghost,.model-btn{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text)}
-    .hero{min-height:calc(100vh - 120px);display:grid;align-items:center;padding:42px 0 72px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:28px;align-items:stretch}.hero-copy,.hero-panel,.contact-card,.form-card,.model-card,.modal-card{position:relative;overflow:hidden}.hero-copy,.hero-panel,.contact-card,.form-card{border-radius:var(--xl);padding:clamp(28px,4vw,44px)}.hero-copy:before,.hero-panel:before,.contact-card:before,.form-card:before,.model-card:before,.modal-card:before{content:"";position:absolute;inset:0;background:linear-gradient(150deg,rgba(255,255,255,.08),transparent 32%),radial-gradient(circle at top right,rgba(158,208,255,.16),transparent 35%);pointer-events:none}.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;color:var(--accent);background:rgba(158,208,255,.12);border:1px solid rgba(158,208,255,.18);font-size:.88rem;font-weight:700;letter-spacing:.02em;margin-bottom:22px}.eyebrow:before{content:"";width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 0 7px rgba(158,208,255,.08)}
-    .hero h1{font-size:clamp(3.2rem,8vw,6.6rem);line-height:.92;letter-spacing:-.04em;margin:0 0 22px;max-width:10ch}.hero p{margin:0;max-width:54ch;font-size:clamp(1rem,2vw,1.2rem);line-height:1.75;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:36px}.stat{padding:18px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.stat-no{font-size:1.9rem;font-weight:800;margin-bottom:6px}.stat-label{color:var(--muted);font-size:.94rem;line-height:1.5}
-    .hero-panel{display:grid;grid-template-rows:auto auto 1fr;gap:20px;background:linear-gradient(180deg,rgba(10,20,32,.72),rgba(8,16,25,.88)),url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1200&q=80") center/cover;min-height:580px}.hero-top{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(8,16,25,.52);border:1px solid rgba(255,255,255,.1);font-size:.85rem;color:#f8e6c9}.hero-highlight{align-self:end;padding:24px;border-radius:28px;background:rgba(8,16,25,.68);border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow)}.hero-highlight h2{margin:0 0 10px;font-size:1.6rem}.hero-highlight p{max-width:none;font-size:.98rem;line-height:1.7;color:var(--muted);margin-bottom:18px}.hero-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}.hero-meta div{padding:14px 16px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.hero-meta span{display:block;color:var(--muted);font-size:.82rem;margin-bottom:6px}.hero-meta strong{font-size:1rem;font-weight:700}
-    .section{padding:72px 0}.section-head,.submit-row,.footer-line{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap}.section-title{margin:0;font-size:clamp(2.4rem,6vw,4rem);line-height:.96;letter-spacing:-.04em}.section-desc{margin:-10px 0 0 0;max-width:56ch;color:var(--muted);line-height:1.75}.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:22px}.model-card{border-radius:32px;background:var(--panel);border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow);transition:transform 260ms ease,border-color 260ms ease,box-shadow 260ms ease}.model-card:hover{transform:translateY(-6px);border-color:rgba(110,184,255,.28);box-shadow:0 28px 90px rgba(0,0,0,.52)}.model-image{position:relative;aspect-ratio:4/4.1;overflow:hidden}.model-image img{width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform 500ms ease}.model-card:hover .model-image img{transform:scale(1.08)}.overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,16,25,0) 8%,rgba(8,16,25,.76) 84%),linear-gradient(160deg,rgba(158,208,255,.1),transparent 40%)}.tags{position:absolute;top:18px;left:18px;right:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;z-index:1}.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;font-size:.78rem;font-weight:800;letter-spacing:.02em;background:rgba(8,16,25,.72);border:1px solid rgba(255,255,255,.12)}.tag.accent{color:#e6f4ff;background:rgba(158,208,255,.16);border-color:rgba(158,208,255,.26)}
-    .model-content{position:relative;padding:22px 22px 24px}.model-head{display:flex;align-items:start;justify-content:space-between;gap:16px;margin-bottom:14px}.model-title{margin:0;font-size:1.7rem;line-height:1.05}.model-sub{margin:6px 0 0;color:var(--muted);font-size:.95rem}.price{text-align:right;white-space:nowrap}.price span{display:block;color:var(--muted);font-size:.8rem;margin-bottom:4px}.price strong{font-size:1.7rem;color:#fff7ec}.model-text{color:var(--muted);line-height:1.75;margin:0 0 18px}.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}.spec{padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.spec span{display:block;color:var(--muted);font-size:.78rem;margin-bottom:6px}.spec strong{font-size:.98rem;line-height:1.35}.model-btn{flex:1 1 180px;min-height:50px;font-weight:700}.empty{display:none;padding:28px;border-radius:30px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.18);color:var(--muted);text-align:center}
-    .contact-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:22px;align-items:stretch}.contact-card,.form-card{background:var(--panel);border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow)}.contact-card{display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:linear-gradient(180deg,rgba(11,22,35,.76),rgba(8,16,25,.94)),url("https://images.unsplash.com/photo-1455156218388-5e61b526818b?auto=format&fit=crop&w=1200&q=80") center/cover}.contact-copy{max-width:44ch;color:var(--muted);line-height:1.8}.contact-points{display:grid;gap:14px}.point{padding:16px 18px;border-radius:22px;background:rgba(8,16,25,.56);border:1px solid rgba(255,255,255,.1)}.point small{display:block;color:var(--accent);font-size:.78rem;margin-bottom:6px;letter-spacing:.03em;text-transform:uppercase}.point strong,.point a{font-size:1rem;line-height:1.5;word-break:break-word}.copy-btn{margin-top:18px;width:fit-content}.form-card{background:var(--panel2)}
-    .form{display:grid;gap:16px}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:grid;gap:8px}.field label{color:var(--muted);font-size:.92rem}.field input,.field textarea{width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--text);padding:16px 18px;transition:border-color var(--ease),background var(--ease),transform var(--ease)}.field input::placeholder,.field textarea::placeholder{color:rgba(198,208,218,.7)}.field input:focus,.field textarea:focus{outline:none;border-color:rgba(158,208,255,.4);background:rgba(255,255,255,.06);transform:translateY(-1px)}.field textarea{min-height:160px;resize:vertical}.field-meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:.82rem}.hint{min-height:1.2em;color:var(--err)}.status{min-height:1.3em;font-size:.95rem}.status.success{color:var(--ok)}.status.error{color:var(--err)}
-    .footer{padding:28px 0 42px;color:rgba(198,208,218,.72);font-size:.9rem}.footer-line{padding-top:22px;border-top:1px solid rgba(255,255,255,.08)}.reveal{opacity:0;transform:translateY(24px);transition:opacity 500ms ease,transform 500ms ease}.reveal.is-visible{opacity:1;transform:translateY(0)}
-    .modal{position:fixed;inset:0;display:grid;place-items:center;padding:24px;background:rgba(2,7,12,.72);opacity:0;visibility:hidden;transition:opacity var(--ease),visibility var(--ease);z-index:30}.modal.is-open{opacity:1;visibility:visible}.modal-card{width:min(980px,100%);max-height:min(90vh,900px);overflow:auto;border-radius:34px;background:var(--panel2);border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow)}.close{position:sticky;top:14px;margin-left:auto;margin-right:14px;margin-top:14px;z-index:2;width:46px;height:46px;border-radius:50%;background:rgba(8,16,25,.72);border:1px solid rgba(255,255,255,.12);font-size:1.35rem}.modal-body{padding:0 22px 26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.88fr);gap:24px}.modal-image{border-radius:28px;overflow:hidden;min-height:420px}.modal-image img{width:100%;height:100%;object-fit:cover}.modal-copy{display:grid;gap:18px;align-content:start;padding-bottom:10px}.modal-copy h3{margin:0;font-size:clamp(2rem,4vw,3rem);line-height:.98}.modal-copy p{margin:0;color:var(--muted);line-height:1.75}.modal-price{display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--text);font-size:1.15rem;font-weight:700}.modal-price strong{font-size:2rem;color:#fff7ec}.list{display:grid;gap:10px;padding:0;margin:0;list-style:none}.list li{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--muted)}.list li strong{color:var(--text);display:block;margin-bottom:4px;font-size:.95rem}
-    @media (max-width:1120px){.hero-grid,.contact-grid,.modal-body{grid-template-columns:1fr}.models{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-panel{min-height:440px}}@media (max-width:760px){.nav,.section-head,.submit-row,.footer-line{flex-direction:column;align-items:stretch}.nav{border-radius:30px;align-items:start}.nav-links,.lang-switcher{justify-content:flex-start}.hero{min-height:auto;padding-top:16px}.hero-copy,.hero-panel,.contact-card,.form-card{border-radius:28px}.stats,.specs,.row{grid-template-columns:1fr}.models{grid-template-columns:1fr}.model-actions,.hero-actions,.modal-actions{flex-direction:column}.model-btn,.btn{width:100%}.modal{padding:12px}.modal-card{border-radius:26px}.modal-body{padding:0 14px 20px}.modal-image:min-height:280px}}
-    .section-head{margin-bottom:80px}
+
+    /* === GLOBAL STYLES === */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: 
+        radial-gradient(circle at top left, rgba(158, 208, 255, 0.22), transparent 34%),
+        radial-gradient(circle at 80% 15%, rgba(145, 191, 255, 0.18), transparent 28%),
+        linear-gradient(180deg, #0b1c32 0%, #13253f 40%, #0f1f38 100%);
+      font-family: "Manrope", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: 
+        linear-gradient(120deg, rgba(255, 255, 255, 0.05) 0%, transparent 28%),
+        linear-gradient(transparent 0%, rgba(255, 255, 255, 0.04) 100%);
+      pointer-events: none;
+      z-index: -3;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 92%);
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      padding: 0;
+      background: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .wrap {
+      width: var(--wrap);
+      margin: 0 auto;
+    }
+
+    .display {
+      font-family: "Cormorant Garamond", serif;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    /* === NAVIGATION === */
+    .nav-shell {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 999;
+      padding: 16px 32px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      transition: transform 300ms ease;
+    }
+
+    .nav-shell.hide {
+      transform: translateY(-100%);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 20px;
+      border-radius: 999px;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(158, 208, 255, 0.28), rgba(110, 184, 255, 0.2));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--accent);
+      font-size: 18px;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.24em;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .nav-links,
+    .lang-switcher,
+    .hero-actions,
+    .model-actions,
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      justify-content: center;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: background var(--ease), color var(--ease);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      outline: none;
+    }
+
+    /* === BUTTONS === */
+    .lang-switcher button,
+    .btn,
+    .model-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 0 18px;
+      border-radius: 999px;
+      transition: transform var(--ease), border-color var(--ease), background var(--ease), 
+                  color var(--ease), box-shadow var(--ease);
+    }
+
+    .lang-switcher button {
+      min-width: 46px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      border: 1px solid transparent;
+    }
+
+    .lang-switcher button:hover,
+    .lang-switcher button:focus-visible,
+    .btn:hover,
+    .btn:focus-visible,
+    .model-btn:hover,
+    .model-btn:focus-visible {
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .lang-switcher button.is-active,
+    .model-btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: rgba(110, 184, 255, 0.4);
+      color: #fff7ec;
+    }
+
+    .btn {
+      min-height: 54px;
+      padding: 0 22px;
+    }
+
+    .btn.primary,
+    .model-btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #1d1208;
+      font-weight: 800;
+      box-shadow: 0 18px 40px rgba(110, 184, 255, 0.18);
+      border: 0;
+    }
+
+    .btn.secondary,
+    .btn.ghost,
+    .model-btn {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+    }
+
+    /* === HERO SECTION === */
+    .hero {
+      min-height: calc(100vh - 120px);
+      display: grid;
+      align-items: center;
+      padding: 100px 0 72px;
+      margin-top: 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-panel,
+    .contact-card,
+    .form-card,
+    .model-card,
+    .modal-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy,
+    .hero-panel,
+    .contact-card,
+    .form-card {
+      border-radius: var(--xl);
+      padding: clamp(28px, 4vw, 44px);
+    }
+
+    .hero-copy::before,
+    .hero-panel::before,
+    .contact-card::before,
+    .form-card::before,
+    .model-card::before,
+    .modal-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(150deg, rgba(255, 255, 255, 0.08), transparent 32%),
+        radial-gradient(circle at top right, rgba(158, 208, 255, 0.16), transparent 35%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(158, 208, 255, 0.12);
+      border: 1px solid rgba(158, 208, 255, 0.18);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 7px rgba(158, 208, 255, 0.08);
+    }
+
+    .hero h1 {
+      font-size: clamp(3.2rem, 8vw, 6.6rem);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      margin: 0 0 22px;
+      max-width: 10ch;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 54ch;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat-no {
+      font-size: 1.9rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.5;
+    }
+
+    .hero-panel {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 20px;
+      background: 
+        linear-gradient(180deg, rgba(10, 20, 32, 0.72), rgba(8, 16, 25, 0.88)),
+        url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1200&q=80") center / cover;
+      min-height: 580px;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(8, 16, 25, 0.52);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.85rem;
+      color: #f8e6c9;
+    }
+
+    .hero-highlight {
+      align-self: end;
+      padding: 24px;
+      border-radius: 28px;
+      background: rgba(8, 16, 25, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-highlight h2 {
+      margin: 0 0 10px;
+      font-size: 1.6rem;
+    }
+
+    .hero-highlight p {
+      max-width: none;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .hero-meta div {
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-meta span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 6px;
+    }
+
+    .hero-meta strong {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    /* === SECTIONS === */
+    .section {
+      padding: 60px 0;
+    }
+
+    .section#models {
+      margin-top: 280px;
+    }
+
+    .section-head,
+    .submit-row,
+    .footer-line {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 20;
+    }
+
+    .section-head {
+      margin-bottom: 80px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+    }
+
+    .section-desc {
+      margin: -10px 0 0 0;
+      max-width: 56ch;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* === MODELS GRID === */
+    .models {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .model-card {
+      border-radius: 32px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+      transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+    }
+
+    .model-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(110, 184, 255, 0.28);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52);
+    }
+
+    .model-image {
+      position: relative;
+      aspect-ratio: 4 / 4.1;
+      overflow: hidden;
+    }
+
+    .model-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 500ms ease;
+    }
+
+    .model-card:hover .model-image img {
+      transform: scale(1.08);
+    }
+
+    /* === CAROUSEL === */
+    .carousel-dots {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 2;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: background 300ms ease;
+    }
+
+    .carousel-dot.active {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 300ms ease;
+      color: var(--text);
+      font-size: 1.2rem;
+      z-index: 2;
+      backdrop-filter: blur(4px);
+    }
+
+    .carousel-arrow:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .carousel-arrow.prev {
+      left: 12px;
+    }
+
+    .carousel-arrow.next {
+      right: 12px;
+    }
+
+    /* === MODEL CONTENT === */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(180deg, rgba(8, 16, 25, 0) 8%, rgba(8, 16, 25, 0.76) 84%),
+        linear-gradient(160deg, rgba(158, 208, 255, 0.1), transparent 40%);
+    }
+
+    .tags {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      z-index: 1;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      background: rgba(8, 16, 25, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .tag.accent {
+      color: #e6f4ff;
+      background: rgba(158, 208, 255, 0.16);
+      border-color: rgba(158, 208, 255, 0.26);
+    }
+
+    .model-content {
+      position: relative;
+      padding: 22px 22px 24px;
+    }
+
+    .model-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .model-title {
+      margin: 0;
+      font-size: 1.7rem;
+      line-height: 1.05;
+    }
+
+    .model-sub {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .price {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .price span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+    }
+
+    .price strong {
+      font-size: 1.7rem;
+      color: #fff7ec;
+    }
+
+    .model-text {
+      color: var(--muted);
+      line-height: 1.75;
+      margin: 0 0 18px;
+    }
+
+    .specs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .spec {
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .spec span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-bottom: 6px;
+    }
+
+    .spec strong {
+      font-size: 0.98rem;
+      line-height: 1.35;
+    }
+
+    .model-btn {
+      flex: 1 1 180px;
+      min-height: 50px;
+      font-weight: 700;
+    }
+
+    /* === TABS === */
+    .section-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 12px 24px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: all 300ms ease;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      background: rgba(158, 208, 255, 0.15);
+      border-color: rgba(158, 208, 255, 0.4);
+      color: var(--accent);
+    }
+
+    /* === OTHER PRODUCTS === */
+    .other-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }}
+
+    .other-product-card {
+      border-radius: 20px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+      transition: transform 260ms ease, border-color 260ms ease;
+      overflow: hidden;
+    }
+
+    .other-product-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(110, 184, 255, 0.28);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52);
+    }
+
+    .product-image {
+      position: relative;
+      aspect-ratio: 16 / 12;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 500ms ease;
+    }
+
+    .other-product-card:hover .product-image img {
+      transform: scale(1.08);
+    }
+
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(8, 16, 25, 0) 0%, rgba(8, 16, 25, 0.5) 100%);
+      pointer-events: none;
+    }
+
+    .product-info {
+      padding: 20px;
+    }
+
+    .product-title {
+      margin: 0;
+      font-size: 1.4rem;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .product-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .empty {
+      display: none;
+      padding: 28px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* === CONTACT SECTION === */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 700px;
+      margin: 0 auto;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .form-card {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+      display: none;
+    }
+
+    .contact-card {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      gap: 22px;
+      background: 
+        linear-gradient(180deg, rgba(11, 22, 35, 0.76), rgba(8, 16, 25, 0.94)),
+        url("https://images.unsplash.com/photo-1455156218388-5e61b526818b?auto=format&fit=crop&w=1200&q=80") center / cover;
+    }
+
+    .contact-copy {
+      max-width: 44ch;
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0 auto;
+    }
+
+    .contact-points {
+      display: grid;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .point {
+      padding: 16px 18px;
+      border-radius: 22px;
+      background: rgba(8, 16, 25, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .point small {
+      display: block;
+      color: var(--accent);
+      font-size: 0.78rem;
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .point strong,
+    .point a {
+      font-size: 1rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .copy-btn {
+      margin: 0 auto;
+      width: fit-content;
+    }
+
+    .form-card {
+      background: var(--panel2);
+    }
+
+    /* === FORM === */
+    .form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      padding: 16px 18px;
+      transition: border-color var(--ease), background var(--ease), transform var(--ease);
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: rgba(198, 208, 218, 0.7);
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: rgba(158, 208, 255, 0.4);
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .field textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .field-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .hint {
+      min-height: 1.2em;
+      color: var(--err);
+    }
+
+    .status {
+      min-height: 1.3em;
+      font-size: 0.95rem;
+    }
+
+    .status.success {
+      color: var(--ok);
+    }
+
+    .status.error {
+      color: var(--err);
+    }
+
+    /* === FOOTER === */
+    .footer {
+      padding: 28px 0 42px;
+      color: rgba(198, 208, 218, 0.72);
+      font-size: 0.9rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === MODAL === */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(2, 7, 12, 0.72);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--ease), visibility var(--ease);
+      z-index: 30;
+    }
+
+    .modal.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      width: min(980px, 100%);
+      max-height: min(90vh, 900px);
+      overflow: auto;
+      border-radius: 34px;
+      background: var(--panel2);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow);
+    }
+
+    .close {
+      position: sticky;
+      top: 14px;
+      margin-left: auto;
+      margin-right: 14px;
+      margin-top: 14px;
+      z-index: 2;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(8, 16, 25, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 1.35rem;
+    }
+
+    .modal-body {
+      padding: 0 22px 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.88fr);
+      gap: 24px;
+    }
+
+    .modal-image {
+      border-radius: 28px;
+      overflow: hidden;
+      min-height: 420px;
+    }
+
+    .modal-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-copy {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+      padding-bottom: 10px;
+    }
+
+    .modal-copy h3 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 0.98;
+    }
+
+    .modal-copy p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .modal-price {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--text);
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .modal-price strong {
+      font-size: 2rem;
+      color: #fff7ec;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .list li {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+
+    .list li strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+
+    /* === MEDIA QUERIES === */
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .contact-grid,
+      .modal-body {
+        grid-template-columns: 1fr;
+      }
+
+      .models {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-panel {
+        min-height: 440px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav,
+      .section-head,
+      .submit-row,
+      .footer-line {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav {
+        border-radius: 30px;
+        align-items: start;
+      }
+
+      .nav-links,
+      .lang-switcher {
+        justify-content: flex-start;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 16px;
+      }
+
+      .hero-copy,
+      .hero-panel,
+      .contact-card,
+      .form-card {
+        border-radius: 28px;
+      }
+
+      .stats,
+      .specs,
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .models {
+        grid-template-columns: 1fr;
+      }
+
+      .model-actions,
+      .hero-actions,
+      .modal-actions {
+        flex-direction: column;
+      }
+
+      .model-btn,
+      .btn {
+        width: 100%;
+      }
+
+      .modal {
+        padding: 12px;
+      }
+
+      .modal-card {
+        border-radius: 26px;
+      }
+
+      .modal-body {
+        padding: 0 14px 20px;
+      }
+
+      .modal-image {
+        min-height: 280px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -58,6 +1210,7 @@
         </div>
         <div class="nav-links">
           <a href="#models" id="nav-models">Modeli</a>
+          <a href="#other-products" id="nav-other">Other Woodworking</a>
           <a href="#contact" id="nav-contact">Kontakt</a>
         </div>
         <div class="lang-switcher" aria-label="Language switcher">
@@ -86,7 +1239,6 @@
           <div class="stats">
             <div class="stat"><div class="stat-no" id="stat-no-1">18</div><div class="stat-label" id="stat-label-1">let ročne izdelave</div></div>
             <div class="stat"><div class="stat-no" id="stat-no-2">100%</div><div class="stat-label" id="stat-label-2">masiven les in kovina</div></div>
-            <div class="stat"><div class="stat-no" id="stat-no-3">6</div><div class="stat-label" id="stat-label-3">jezikov na eni strani</div></div>
           </div>
         </article>
 
@@ -121,7 +1273,19 @@
       </div>
     </section>
 
-    <section class="section" id="contact">
+    <section class="section" id="other-products">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow" id="other-eyebrow">Other Woodworking</div>
+            <h2 class="section-title display" id="other-title">Handcrafted Accessories</h2>
+          </div>
+          <p class="section-desc" id="other-description">Explore our collection of premium wooden accessories and crafted items, all made with the same dedication and quality as our sleds.</p>
+        </div>
+
+        <div class="other-products-grid" id="other-products-grid"></div>
+      </div>
+    </section>
       <div class="wrap contact-grid">
         <article class="contact-card reveal">
           <div>
@@ -168,7 +1332,7 @@
         heroDescription: "Ročno izdelani modeli WinterCraft združujejo tradicijo, udobje in natančno izdelavo. Stran je zdaj osredotočena samo na modele in hiter stik.",
         heroPrimary: "Poglej modele",
         heroSecondary: "Pošlji povpraševanje",
-        stats: [{ number: "18", label: "let ročne izdelave" }, { number: "100%", label: "masiven les in kovina" }, { number: "6", label: "jezikov na eni strani" }],
+        stats: [{ number: "18", label: "let ročne izdelave" }, { number: "100%", label: "masiven les in kovina" }],
         heroBadge: "Zimska kolekcija 2026",
         heroBadge2: "Majhne serije",
         heroHighlightTitle: "Spoznajte modele brez odvečnih korakov",
@@ -198,27 +1362,19 @@
         contactWorkshopValue: "Gorenjska, Slovenija",
         copyEmail: "Kopiraj e-pošto",
         copiedEmail: "E-pošta je kopirana.",
-        labels: { firstName: "Ime", lastName: "Priimek", email: "E-poštni naslov", modelInterest: "Zanimanje za model", message: "Sporočilo" },
-        placeholders: { firstName: "Vnesite ime", lastName: "Vnesite priimek", email: "ime@podjetje.com", modelInterest: "Na primer: Aurora Family", message: "Povejte nam, kateri model vas zanima, komu je namenjen in kdaj ga potrebujete." },
-        submit: "Pošlji sporočilo",
-        messageCounter: "{count} / 320",
-        validationShort: "Dodajte vsaj 20 znakov, da bomo lažje pomagali.",
-        validationRequired: "Izpolnite ime, e-pošto in sporočilo.",
-        validationEmail: "Vnesite veljaven e-poštni naslov.",
-        successMessage: "Hvala. Povpraševanje je pripravljeno in obrazec je bil ponastavljen.",
         footerCopy: "Ročno izdelano v slovenskih Alpah."
       },
       hr: {
         metaTitle: "WinterCraft • Premium drvene saonice",
         brandSubtitle: "Premium drvene saonice",
         navModels: "Modeli",
+        navOther: "Druga obrtništva",
         navContact: "Kontakt",
-        heroEyebrow: "Radionica u slovenskim Alpama",
         heroTitle: "Saonice koje izgledaju vrhunski i voze još bolje.",
         heroDescription: "Ručno izrađeni WinterCraft modeli spajaju tradiciju, udobnost i preciznu izradu. Stranica je sada fokusirana samo na modele i brz kontakt.",
         heroPrimary: "Pogledaj modele",
         heroSecondary: "Pošalji upit",
-        stats: [{ number: "18", label: "godina ručne izrade" }, { number: "100%", label: "masivno drvo i metal" }, { number: "6", label: "jezika na jednoj stranici" }],
+        stats: [{ number: "18", label: "godina ručne izrade" }, { number: "100%", label: "masivno drvo i metal" }],
         heroBadge: "Zimska kolekcija 2026",
         heroBadge2: "Male serije",
         heroHighlightTitle: "Upoznajte modele bez suvišnih koraka",
@@ -248,27 +1404,19 @@
         contactWorkshopValue: "Gorenjska, Slovenija",
         copyEmail: "Kopiraj e-poštu",
         copiedEmail: "E-pošta je kopirana.",
-        labels: { firstName: "Ime", lastName: "Prezime", email: "E-mail adresa", modelInterest: "Interes za model", message: "Poruka" },
-        placeholders: { firstName: "Unesite ime", lastName: "Unesite prezime", email: "ime@tvrtka.com", modelInterest: "Na primjer: Aurora Family", message: "Recite nam koji vas model zanima, kome je namijenjen i kada vam je potreban." },
-        submit: "Pošalji poruku",
-        messageCounter: "{count} / 320",
-        validationShort: "Dodajte barem 20 znakova kako bismo lakše pomogli.",
-        validationRequired: "Ispunite ime, e-mail i poruku.",
-        validationEmail: "Unesite valjanu e-mail adresu.",
-        successMessage: "Hvala. Upit je pripremljen i forma je resetirana.",
         footerCopy: "Ručno izrađeno u slovenskim Alpama."
       },
       it: {
         metaTitle: "WinterCraft • Slitte premium in legno",
         brandSubtitle: "Slitte premium in legno",
         navModels: "Modelli",
+        navOther: "Altro Artigianato",
         navContact: "Contatti",
-        heroEyebrow: "Laboratorio nelle Alpi slovene",
         heroTitle: "Slitte che sembrano premium e scorrono ancora meglio.",
         heroDescription: "I modelli WinterCraft realizzati a mano uniscono tradizione, comfort e precisione artigianale. La pagina ora e focalizzata solo su modelli e contatto rapido.",
         heroPrimary: "Scopri i modelli",
         heroSecondary: "Invia una richiesta",
-        stats: [{ number: "18", label: "anni di lavorazione artigianale" }, { number: "100%", label: "legno massello e metallo" }, { number: "6", label: "lingue in una sola pagina" }],
+        stats: [{ number: "18", label: "anni di lavorazione artigianale" }, { number: "100%", label: "legno massello e metallo" }],
         heroBadge: "Collezione inverno 2026",
         heroBadge2: "Piccole serie",
         heroHighlightTitle: "Scopri i modelli senza passaggi inutili",
@@ -298,27 +1446,19 @@
         contactWorkshopValue: "Alta Carniola, Slovenia",
         copyEmail: "Copia e-mail",
         copiedEmail: "E-mail copiata.",
-        labels: { firstName: "Nome", lastName: "Cognome", email: "Indirizzo e-mail", modelInterest: "Interesse per il modello", message: "Messaggio" },
-        placeholders: { firstName: "Inserisci il nome", lastName: "Inserisci il cognome", email: "nome@azienda.com", modelInterest: "Per esempio: Aurora Family", message: "Dicci quale modello ti interessa, per chi e pensato e quando ti serve." },
-        submit: "Invia messaggio",
-        messageCounter: "{count} / 320",
-        validationShort: "Aggiungi almeno 20 caratteri cosi possiamo aiutarti meglio.",
-        validationRequired: "Compila nome, e-mail e messaggio.",
-        validationEmail: "Inserisci un indirizzo e-mail valido.",
-        successMessage: "Grazie. La richiesta e pronta e il modulo e stato reimpostato.",
         footerCopy: "Realizzato a mano nelle Alpi slovene."
       },
       en: {
         metaTitle: "WinterCraft • Premium wooden sleds",
         brandSubtitle: "Premium wooden sleds",
         navModels: "Models",
+        navOther: "Other Woodworking",
         navContact: "Contact",
-        heroEyebrow: "Workshop in the Slovenian Alps",
         heroTitle: "Sleds that look premium and ride even better.",
         heroDescription: "Handcrafted WinterCraft models combine tradition, comfort, and precise workmanship. The page now focuses only on models and fast contact.",
         heroPrimary: "Explore models",
         heroSecondary: "Send an inquiry",
-        stats: [{ number: "18", label: "years of craftsmanship" }, { number: "100%", label: "solid wood and metal" }, { number: "6", label: "languages on one page" }],
+        stats: [{ number: "18", label: "years of craftsmanship" }, { number: "100%", label: "solid wood and metal" }],
         heroBadge: "Winter collection 2026",
         heroBadge2: "Small batches",
         heroHighlightTitle: "Discover the models without extra steps",
@@ -348,27 +1488,19 @@
         contactWorkshopValue: "Upper Carniola, Slovenia",
         copyEmail: "Copy email",
         copiedEmail: "Email copied.",
-        labels: { firstName: "First name", lastName: "Last name", email: "Email address", modelInterest: "Model interest", message: "Message" },
-        placeholders: { firstName: "Enter first name", lastName: "Enter last name", email: "name@company.com", modelInterest: "For example: Aurora Family", message: "Tell us which model you like, who it is for, and when you need it." },
-        submit: "Send message",
-        messageCounter: "{count} / 320",
-        validationShort: "Add at least 20 characters so we can help properly.",
-        validationRequired: "Please fill in name, email, and message.",
-        validationEmail: "Please enter a valid email address.",
-        successMessage: "Thanks. Your inquiry is ready and the form has been reset.",
         footerCopy: "Handcrafted in the Slovenian Alps."
       },
       de: {
         metaTitle: "WinterCraft • Premium Holzschlitten",
         brandSubtitle: "Premium Holzschlitten",
         navModels: "Modelle",
+        navOther: "Weitere Handwerk",
         navContact: "Kontakt",
-        heroEyebrow: "Werkstatt in den slowenischen Alpen",
         heroTitle: "Schlitten, die hochwertig aussehen und noch besser fahren.",
         heroDescription: "Die handgefertigten WinterCraft Modelle verbinden Tradition, Komfort und präzise Verarbeitung. Die Seite konzentriert sich jetzt nur noch auf Modelle und schnellen Kontakt.",
         heroPrimary: "Modelle ansehen",
         heroSecondary: "Anfrage senden",
-        stats: [{ number: "18", label: "Jahre Handwerkskunst" }, { number: "100%", label: "Massivholz und Metall" }, { number: "6", label: "Sprachen auf einer Seite" }],
+        stats: [{ number: "18", label: "Jahre Handwerkskunst" }, { number: "100%", label: "Massivholz und Metall" }],
         heroBadge: "Winterkollektion 2026",
         heroBadge2: "Kleine Serien",
         heroHighlightTitle: "Modelle ohne unnötige Schritte entdecken",
@@ -398,27 +1530,19 @@
         contactWorkshopValue: "Oberkrain, Slowenien",
         copyEmail: "E-Mail kopieren",
         copiedEmail: "E-Mail kopiert.",
-        labels: { firstName: "Vorname", lastName: "Nachname", email: "E-Mail-Adresse", modelInterest: "Interesse am Modell", message: "Nachricht" },
-        placeholders: { firstName: "Vorname eingeben", lastName: "Nachname eingeben", email: "name@firma.com", modelInterest: "Zum Beispiel: Aurora Family", message: "Sagen Sie uns, welches Modell Sie interessiert, für wen es gedacht ist und wann Sie es brauchen." },
-        submit: "Nachricht senden",
-        messageCounter: "{count} / 320",
-        validationShort: "Bitte geben Sie mindestens 20 Zeichen ein, damit wir besser helfen können.",
-        validationRequired: "Bitte füllen Sie Vorname, E-Mail und Nachricht aus.",
-        validationEmail: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
-        successMessage: "Danke. Die Anfrage ist vorbereitet und das Formular wurde zurückgesetzt.",
         footerCopy: "Handgefertigt in den slowenischen Alpen."
       },
       fr: {
         metaTitle: "WinterCraft • Luges premium en bois",
         brandSubtitle: "Luges premium en bois",
         navModels: "Modèles",
+        navOther: "Autre Artisanat",
         navContact: "Contact",
-        heroEyebrow: "Atelier dans les Alpes slovènes",
         heroTitle: "Des luges au look premium et à la glisse encore meilleure.",
         heroDescription: "Les modèles WinterCraft fabriqués à la main réunissent tradition, confort et précision artisanale. La page se concentre désormais uniquement sur les modèles et un contact rapide.",
         heroPrimary: "Voir les modèles",
         heroSecondary: "Envoyer une demande",
-        stats: [{ number: "18", label: "ans de savoir-faire" }, { number: "100%", label: "bois massif et métal" }, { number: "6", label: "langues sur une seule page" }],
+        stats: [{ number: "18", label: "ans de savoir-faire" }, { number: "100%", label: "bois massif et métal" }],
         heroBadge: "Collection hiver 2026",
         heroBadge2: "Petites séries",
         heroHighlightTitle: "Découvrez les modèles sans étapes inutiles",
@@ -464,7 +1588,14 @@
       {
         id: "aurora",
         price: "180 €",
-        image: "https://www.image2url.com/r2/default/images/1776181168619-16f2b3d8-4c9e-4143-a643-a9bb84c19afb.jpg",
+        images: [
+          "https://www.image2url.com/r2/default/images/1776181168619-16f2b3d8-4c9e-4143-a643-a9bb84c19afb.jpg",
+          "https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1551958219-acbc608c6be4?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1426604342505-1e0418bd7475?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1551632786-de41ec16a864?auto=format&fit=crop&w=1200&q=80"
+        ],
         tags: ["bestseller"],
         copy: {
           sl: { name: "Aurora Family", subtitle: "Topel družinski favorit", description: "Stabilen model za skupne spuste, mehko oblazinjen sedež in več prostora za mirnejšo vožnjo.", seats: "2 osebi", terrain: "Urejena pobočja", finish: "Oljeni hrast", features: [{ title: "Udobna geometrija", text: "Daljše sedalo in višji naslon za bolj sproščeno vožnjo otrok in staršev." }, { title: "Zanesljiv oprijem", text: "Širši kovinski tekači držijo smer tudi na tršem snegu." }, { title: "Pripravljeno za darilo", text: "Na voljo z gravuro imena in zaščitnim trakom za transport." }] },
@@ -478,7 +1609,14 @@
       {
         id: "summit",
         price: "160 €",
-        image: "https://www.image2url.com/r2/default/images/1776178903411-9728fafe-84c9-499a-a741-1f68df920a2b.jpg",
+        images: [
+          "https://www.image2url.com/r2/default/images/1776178903411-9728fafe-84c9-499a-a741-1f68df920a2b.jpg",
+          "https://images.unsplash.com/photo-1516156538662-b6bbe340f8a9?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1552993881-5fefe8c9ef14?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1500829243541-74e440642117?auto=format&fit=crop&w=1200&q=80"
+        ],
         tags: ["speed", "new"],
         copy: {
           sl: { name: "Summit Racer", subtitle: "Lažji in bolj odziven", description: "Hitrejša postavitev z nižjim težiščem, natančnim vodenjem in športnejšim občutkom na strmejših odsekih.", seats: "1 oseba", terrain: "Strma pobočja", finish: "Mat jesen", features: [{ title: "Nižje težišče", text: "Kompaktna oblika pomaga pri natančnejšem nadzoru med hitrejšimi spusti." }, { title: "Lažji okvir", text: "Optimizirano razmerje med težo in togostjo za živahen odziv." }, { title: "Športna nastavitev", text: "Agresivnejši kot tekačev za bolj neposreden občutek pri vožnji." }] },
@@ -490,6 +1628,14 @@
         }
       }
     ];
+
+    const otherProducts = {
+      accessories: [
+        { id: "box1", name: "Wooden Craft Box", desc: "Beautiful storage box with intricate details", images: ["https://images.unsplash.com/photo-1578500494198-246f612d03b3?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1578500494198-246f612d03b3?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1578500494198-246f612d03b3?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80"] },
+        { id: "frame", name: "Picture Frame Set", desc: "Handmade wooden picture frames in various sizes", images: ["https://images.unsplash.com/photo-1594736797933-d0501ba2fe05?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1594736797933-d0501ba2fe05?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1578500494198-246f612d03b3?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1594736797933-d0501ba2fe05?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=80"] },
+        { id: "stand", name: "Display Stand", desc: "Elegant wooden stand for collectibles", images: ["https://images.unsplash.com/photo-1578500494198-246f612d03b3?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1578500494198-246f612d03b3?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1594736797933-d0501ba2fe05?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1578500494198-246f612d03b3?auto=format&fit=crop&w=1200&q=80", "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=1200&q=80"] }
+      ]
+    };
 
     const state = {
       lang: localStorage.getItem("wintercraft-language") || "sl",
@@ -570,10 +1716,17 @@
         const copy = getCopy(model);
         const card = document.createElement("article");
         card.className = "model-card";
+        let currentImageIndex = 0;
+        
+        const dotsHTML = model.images.map((_, i) => `<div class="carousel-dot${i === 0 ? ' active' : ''}" data-index="${i}"></div>`).join("");
+        
         card.innerHTML = `
           <div class="model-image">
-            <img src="${model.image}" alt="${copy.name}">
+            <img src="${model.images[0]}" alt="${copy.name}">
             <div class="overlay"></div>
+            <button class="carousel-arrow prev" aria-label="Previous image">❮</button>
+            <button class="carousel-arrow next" aria-label="Next image">❯</button>
+            <div class="carousel-dots">${dotsHTML}</div>
             <div class="tags">
               <span class="tag accent">${t(`tags.${model.tags[0]}`)}</span>
               ${model.tags[1] ? `<span class="tag">${t(`tags.${model.tags[1]}`)}</span>` : ''}
@@ -601,6 +1754,36 @@
             </div>
           </div>`;
         refs.modelsGrid.appendChild(card);
+        
+        // Manual navigation
+        const imgElement = card.querySelector("img");
+        const dotsElements = card.querySelectorAll(".carousel-dot");
+        const prevBtn = card.querySelector(".carousel-arrow.prev");
+        const nextBtn = card.querySelector(".carousel-arrow.next");
+        
+        const updateImage = (index) => {
+          currentImageIndex = (index + model.images.length) % model.images.length;
+          imgElement.src = model.images[currentImageIndex];
+          dotsElements.forEach((dot, i) => dot.classList.toggle("active", i === currentImageIndex));
+        };
+        
+        // Dot navigation
+        dotsElements.forEach((dot) => {
+          dot.addEventListener("click", () => {
+            updateImage(parseInt(dot.dataset.index));
+          });
+        });
+        
+        // Arrow navigation
+        prevBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          updateImage(currentImageIndex - 1);
+        });
+        
+        nextBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          updateImage(currentImageIndex + 1);
+        });
       });
       document.querySelectorAll("[data-details]").forEach((btn) => btn.addEventListener("click", () => openModal(btn.dataset.details)));
     }
@@ -611,7 +1794,7 @@
       state.selectedModelId = modelId;
       const copy = getCopy(model);
       refs.modalBody.innerHTML = `
-        <div class="modal-image"><img src="${model.image}" alt="${copy.name}"></div>
+        <div class="modal-image"><img src="${model.images[0]}" alt="${copy.name}"></div>
         <div class="modal-copy">
           <div class="eyebrow">${t(`tags.${model.tags[0]}`)}</div>
           <h3 class="display" id="modal-title">${copy.name}</h3>
@@ -640,6 +1823,79 @@
       refs.modal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
       state.selectedModelId = null;
+    }
+
+    function switchOtherCategory(category, btn) {
+      document.querySelectorAll(".tab-btn").forEach(t => t.classList.remove("active"));
+      btn.classList.add("active");
+      renderOtherProducts(category);
+    }
+
+    function renderOtherProducts(category) {
+      const grid = document.getElementById("other-products-grid");
+      grid.innerHTML = "";
+      const products = otherProducts[category] || [];
+      
+      products.forEach((product) => {
+        const card = document.createElement("div");
+        card.className = "other-product-card";
+        
+        const dotsHTML = product.images.length > 1 
+          ? product.images.map((_, i) => `<button class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></button>`).join('')
+          : '';
+        
+        card.innerHTML = `
+          <div class="product-image" style="position: relative;">
+            <img src="${product.images[0]}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;" data-current="0">
+            <div class="product-overlay"></div>
+            ${product.images.length > 1 ? `
+              <button class="carousel-arrow prev">❮</button>
+              <button class="carousel-arrow next">❯</button>
+              <div class="carousel-dots" style="display: flex; justify-content: center; gap: 6px; position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 2;">
+                ${dotsHTML}
+              </div>
+            ` : ''}
+          </div>    
+          <div class="product-info">
+            <h3 class="product-title">${product.name}</h3>
+            <p class="product-desc">${product.desc}</p>
+          </div>`;
+        
+        card.setAttribute('data-product', product.id);
+        card.setAttribute('data-images', JSON.stringify(product.images));
+        grid.appendChild(card);
+        
+        if (product.images.length > 1) {
+          const img = card.querySelector('img');
+          const prevBtn = card.querySelector('.carousel-arrow.prev');
+          const nextBtn = card.querySelector('.carousel-arrow.next');
+          const dots = card.querySelectorAll('.carousel-dot');
+          
+          const updateImage = (index) => {
+            index = (index + product.images.length) % product.images.length;
+            img.src = product.images[index];
+            img.dataset.current = index;
+            dots.forEach((d, i) => d.classList.toggle('active', i === index));
+          };
+          
+          prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateImage(parseInt(img.dataset.current) - 1);
+          });
+          
+          nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateImage(parseInt(img.dataset.current) + 1);
+          });
+          
+          dots.forEach((dot) => {
+            dot.addEventListener('click', (e) => {
+              e.stopPropagation();
+              updateImage(parseInt(dot.dataset.index));
+            });
+          });
+        }
+      });
     }
 
 
@@ -692,6 +1948,20 @@
     refs.footerYear.textContent = new Date().getFullYear();
     observeReveals();
     applyTranslations();
+    renderOtherProducts('accessories');
+
+    // Hide navbar on scroll
+    let lastScrollTop = 0;
+    const navShell = document.querySelector(".nav-shell");
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > lastScrollTop && scrollTop > 100) {
+        navShell.classList.add("hide");
+      } else {
+        navShell.classList.remove("hide");
+      }
+      lastScrollTop = scrollTop;
+    });
   </script>
 </body>
 </html>
